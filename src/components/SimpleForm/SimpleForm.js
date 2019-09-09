@@ -120,9 +120,17 @@ const SimpleForm = ({ handleSubmit, pristine, reset, submitting }) => {
       </div>
     </div>
 
-    <button
-      type="submit"
-      className="btn btn-secondary mt-3">Submit</button>
+    <div className="mt-3">
+      <button
+        type="submit"
+        disabled={pristine || submitting}
+        className="btn btn-secondary">Submit</button>
+
+      <button
+        type="submit"
+        disabled={pristine || submitting} onClick={reset}
+        className="btn btn-light ml-3">Clear</button>
+    </div>
   </form>
 }
 
