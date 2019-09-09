@@ -38,27 +38,31 @@ const renderField = ({
   meta: { touched, error, warning }
 }) => {
   const invalid = touched && error
+  const isWarning = touched && warning
   const valid = touched && !invalid
-   return  <div className='form-group'>
+  return (
+    <div className='form-group'>
       <label htmlFor={label}>{label}</label>
       <div>
         <input
           id={label}
-          className={(invalid ? ' is-invalid': ' ') + (valid ? ' is-valid' : ' ') + ' form-control'}
+          className={(invalid ? ' is-invalid' : ' ') + (valid ? ' is-valid' : ' ') + ' form-control'}
           {...input}
           placeholder={label}
           type={type} />
-        {touched &&
-          ((error && <div className="invalid-feedback">{error}</div>) ||
-            (warning && <span>{warning}</span>))}
+
+        {invalid && <div className="invalid-feedback">{error}</div>}
+        {isWarning && <small>{warning}</small>}
       </div>
     </div>
+  )
 }
 
-const SyncValidationForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
+const SyncValidationForm = ({handleSubmit, pristine, reset, submitting}) => {
   return (
-    <form noValidate onSubmit={handleSubmit}>
+    <form
+      noValidate
+      onSubmit={handleSubmit}>
       <div className="mt-3">
         <Field
           name="username"
