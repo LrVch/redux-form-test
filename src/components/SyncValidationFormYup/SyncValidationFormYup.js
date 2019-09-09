@@ -2,6 +2,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import * as yup from 'yup';
 import { /*asyncValidator,*/ syncValidator } from '../../utils'
+import {  RenderField } from '../shared'
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -14,7 +15,8 @@ const validationSchema = yup.object().shape({
     .required('Required')
     .email('Invalid email address'),
   age: yup
-    .number('Only number is acceptable')
+    .number()
+    .typeError('Only number is acceptable')
     .required('Required')
     .positive('Only positive number is acceptable')
     .integer('Only integer number is acceptable')
@@ -27,32 +29,7 @@ const warningSchema = yup.object().shape({
     .min(19, 'Hmm, you seem a bit young...')
 })
 
-const renderField = ({
-  input,
-  label,
-  type,
-  meta: { touched, error, warning }
-}) => {
-  const invalid = touched && error
-  const isWarning = touched && warning && !invalid
-  const valid = touched && !invalid
-  return (
-    <div className='form-group'>
-      <label htmlFor={label}>{label}</label>
-      <div>
-        <input
-          id={label}
-          className={(invalid ? ' is-invalid' : ' ') + (valid ? ' is-valid' : ' ') + ' form-control'}
-          {...input}
-          placeholder={label}
-          type={type} />
 
-        {invalid && <div className="invalid-feedback">{error}</div>}
-        {isWarning && <small>{warning}</small>}
-      </div>
-    </div>
-  )
-}
 
 const SyncValidationFormYup = ({ handleSubmit, pristine, reset, submitting }) => {
   return (
@@ -64,7 +41,7 @@ const SyncValidationFormYup = ({ handleSubmit, pristine, reset, submitting }) =>
         <Field
           name="username"
           type="text"
-          component={renderField}
+          component={RenderField}
           label="Username"
         />
       </div>
@@ -73,7 +50,7 @@ const SyncValidationFormYup = ({ handleSubmit, pristine, reset, submitting }) =>
         <Field
           name="email"
           type="email"
-          component={renderField}
+          component={RenderField}
           label="Email" />
       </div>
 
@@ -81,7 +58,7 @@ const SyncValidationFormYup = ({ handleSubmit, pristine, reset, submitting }) =>
         <Field
           name="age"
           type="text"
-          component={renderField}
+          component={RenderField}
           label="Age" />
       </div>
 
@@ -99,7 +76,7 @@ const SyncValidationFormYup = ({ handleSubmit, pristine, reset, submitting }) =>
 
 export default reduxForm({
   form: 'syncValidationYup',
-  validate: syncValidator(validationSchema), 
+  validate: syncValidator(validationSchema),
   warn: syncValidator(warningSchema)
   // asyncValidate: asyncValidator(schema)
 })(SyncValidationFormYup)
