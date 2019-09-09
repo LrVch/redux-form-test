@@ -1,5 +1,6 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import {  RenderField } from '../shared'
 
 const validate = values => {
   const errors = {}
@@ -31,33 +32,6 @@ const warn = values => {
   return warnings
 }
 
-const renderField = ({
-  input,
-  label,
-  type,
-  meta: { touched, error, warning }
-}) => {
-  const invalid = touched && error
-  const isWarning = touched && warning
-  const valid = touched && !invalid
-  return (
-    <div className='form-group'>
-      <label htmlFor={label}>{label}</label>
-      <div>
-        <input
-          id={label}
-          className={(invalid ? ' is-invalid' : ' ') + (valid ? ' is-valid' : ' ') + ' form-control'}
-          {...input}
-          placeholder={label}
-          type={type} />
-
-        {invalid && <div className="invalid-feedback">{error}</div>}
-        {isWarning && <small>{warning}</small>}
-      </div>
-    </div>
-  )
-}
-
 const SyncValidationForm = ({handleSubmit, pristine, reset, submitting}) => {
   return (
     <form
@@ -67,15 +41,15 @@ const SyncValidationForm = ({handleSubmit, pristine, reset, submitting}) => {
         <Field
           name="username"
           type="text"
-          component={renderField}
+          component={RenderField}
           label="Username"
         />
       </div>
       <div className="mt-3">
-        <Field name="email" type="email" component={renderField} label="Email" />
+        <Field name="email" type="email" component={RenderField} label="Email" />
       </div>
       <div className="mt-3">
-        <Field name="age" type="number" component={renderField} label="Age" />
+        <Field name="age" type="number" component={RenderField} label="Age" />
       </div>
       <div>
         <button type="submit" className="btn btn-secondary" disabled={submitting}>
