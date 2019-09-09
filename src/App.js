@@ -5,6 +5,7 @@ import SyncValidationFormYup from './components/SyncValidationFormYup/SyncValida
 import SimpleForm from './components/SimpleForm/SimpleForm';
 import SyncValidationForm from './components/SyncValidationForm/SyncValidationForm';
 import FieldLevelValidation from './components/FieldLevelValidation/FieldLevelValidation';
+import MixedSyncValidation from './components/MixedSyncValidation/MixedSyncValidation';
 
 function App() {
   return (
@@ -27,6 +28,13 @@ function App() {
             {submit => (<SyncValidationForm onSubmit={submit} />)}
           </Page>
           <hr />
+          <div className="alert alert-secondary mt-2" role="alert">
+            Mixed  validation.
+          </div>
+          <Page>
+            {submit => (<MixedSyncValidation onSubmit={submit} />)}
+          </Page>
+          <hr />
         </div>
         <div className="col-sm">
           <div className="alert alert-secondary mt-2" role="alert">
@@ -38,7 +46,7 @@ function App() {
           <hr />
         </div>
         <div className="col-sm">
-        <div className="alert alert-secondary mt-2" role="alert">
+          <div className="alert alert-secondary mt-2" role="alert">
             Field level validation.
           </div>
           <Page>
