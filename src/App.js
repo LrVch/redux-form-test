@@ -1,8 +1,10 @@
 import React from 'react';
 import './App.css';
-import SimplePage from './pages/SimplePage/SimplePage';
-import SyncValidationPage from './pages/SyncValidationPage/SyncValidationPage';
-import SyncValidationPageYup from './pages/SyncValidationPageYup/SyncValidationPageYup';
+import Page from './pages/Page/Page';
+import SyncValidationFormYup from './components/SyncValidationFormYup/SyncValidationFormYup';
+import SimpleForm from './components/SimpleForm/SimpleForm';
+import SyncValidationForm from './components/SyncValidationForm/SyncValidationForm';
+import FieldLevelValidation from './components/FieldLevelValidation/FieldLevelValidation';
 
 function App() {
   return (
@@ -12,25 +14,36 @@ function App() {
           <div className="alert alert-secondary mt-2" role="alert">
             A simple from without validation.
           </div>
-          <SimplePage />
+          <Page>
+            {submit => (<SimpleForm onSubmit={submit} />)}
+          </Page>
           <hr />
         </div>
         <div className="col-sm">
           <div className="alert alert-secondary mt-2" role="alert">
             Simple sync validation.
           </div>
-          <SyncValidationPage />
+          <Page>
+            {submit => (<SyncValidationForm onSubmit={submit} />)}
+          </Page>
           <hr />
         </div>
         <div className="col-sm">
           <div className="alert alert-secondary mt-2" role="alert">
             Simple sync validation with yup.
           </div>
-          <SyncValidationPageYup />
+          <Page>
+            {submit => (<SyncValidationFormYup onSubmit={submit} />)}
+          </Page>
           <hr />
         </div>
         <div className="col-sm">
-
+        <div className="alert alert-secondary mt-2" role="alert">
+            Field level validation.
+          </div>
+          <Page>
+            {submit => (<FieldLevelValidation onSubmit={submit} />)}
+          </Page>
           <hr />
         </div>
       </div>
