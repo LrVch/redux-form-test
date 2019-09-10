@@ -11,7 +11,7 @@ import {
   minLength,
   russianPhoneNumberPattern,
   minValue,
-  number,
+  // number,
   required,
   tooYoung
 } from '../../utils'

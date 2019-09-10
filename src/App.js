@@ -6,11 +6,14 @@ import SimpleForm from './components/SimpleForm/SimpleForm';
 import SyncValidationForm from './components/SyncValidationForm/SyncValidationForm';
 import FieldLevelValidation from './components/FieldLevelValidation/FieldLevelValidation';
 import MixedSyncValidation from './components/MixedSyncValidation/MixedSyncValidation';
+import AsyncBlurValidation from './components/AsyncBlurValidation/AsyncBlurValidation';
 
 function App() {
   return (
     <div className="container-fluid">
       <div className="row">
+
+        {/* first */}
         <div className="col-sm">
           <div className="alert alert-secondary mt-2" role="alert">
             A simple from without validation.
@@ -20,6 +23,8 @@ function App() {
           </Page>
           <hr />
         </div>
+
+        {/* second */}
         <div className="col-sm">
           <div className="alert alert-secondary mt-2" role="alert">
             Simple sync validation.
@@ -29,13 +34,15 @@ function App() {
           </Page>
           <hr />
           <div className="alert alert-secondary mt-2" role="alert">
-            Mixed  validation.
+            Mixed validation sync validation.(field level and validation fn)
           </div>
           <Page>
             {submit => (<MixedSyncValidation onSubmit={submit} />)}
           </Page>
           <hr />
         </div>
+
+        {/* third */}
         <div className="col-sm">
           <div className="alert alert-secondary mt-2" role="alert">
             Simple sync validation with yup.
@@ -44,7 +51,16 @@ function App() {
             {submit => (<SyncValidationFormYup onSubmit={submit} />)}
           </Page>
           <hr />
+          <div className="alert alert-secondary mt-2" role="alert">
+            Async blur validation.(fails on multiple fields validation)
+          </div>
+          <Page>
+            {submit => (<AsyncBlurValidation onSubmit={submit} />)}
+          </Page>
+          <hr />
         </div>
+
+        {/* fourth */}
         <div className="col-sm">
           <div className="alert alert-secondary mt-2" role="alert">
             Field level validation.

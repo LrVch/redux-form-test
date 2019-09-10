@@ -1,3 +1,5 @@
+import { sleep } from './common'
+
 export const asyncValidator = schema => async formValues => {
   try {
     await schema.validateSync(formValues, { abortEarly: false })
@@ -121,4 +123,46 @@ export const russianPhoneNumberPattern = (
       ? message.replace(regexLength, pattern)
       : undefined
   }
+
+
+const checkUserName = (username, props) => {
+  if (['john', 'paul', 'george', 'ringo'].includes(username)) {
+    // eslint-disable-next-line no-throw-literal
+    throw {...props.asyncErrors, username: 'That username is taken' }
+  }
+}
+
+const checkUserEmail = (email, props) => {
+  if (['john@mail.com', 'paul@mail.com', 'george@mail.com', 'ringo@mail.com']
+    .includes(email)) {
+    // eslint-disable-next-line no-throw-literal
+    throw {...props.asyncErrors, email: 'That email is already taken' }
+  }
+}
+
+const checkUserAge = (age, props) => {
+  if (age < 16) {
+    // eslint-disable-next-line no-throw-literal
+    throw {...props.asyncErrors, age: 'You are too young :(' }
+  }
+}
+
+
+export const asyncValidate = (values, dispatch, props, blurredField) => {
+  console.log(props)
+  return sleep(1000).then(() => {
+    if (blurredField === 'username') {
+      checkUserName(values.username, props)
+    }
+
+    if (blurredField === 'email') {
+      checkUserEmail(values.email, props)
+    }
+
+    if (blurredField === 'age') {
+      checkUserAge(values.age, props)
+    }
+  })
+}
+
 

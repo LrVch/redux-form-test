@@ -1,0 +1,16 @@
+.form-group>div {
+  position: relative;
+}
+
+.form-group .spinner-border {
+  display: none;
+  position: absolute;
+  right: 5px;
+  top: 7px;
+  width: 24px;
+  height: 24px;
+}
+
+.form-group.async-validating .spinner-border {
+  display: block;
+}

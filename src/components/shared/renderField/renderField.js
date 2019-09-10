@@ -4,13 +4,13 @@ export const RenderField = ({
   input,
   label,
   type,
-  meta: { touched, error, warning }
+  meta: { asyncValidating, touched, error, warning }
 }) => {
   const invalid = touched && error
   const isWarning = touched && warning && !invalid
   const valid = touched && !invalid
   return (
-    <div className='form-group'>
+    <div className={(asyncValidating ? 'async-validating' : '') + ' form-group'}>
       <label htmlFor={label}>{label}</label>
       <div>
         <input
@@ -19,6 +19,10 @@ export const RenderField = ({
           {...input}
           placeholder={label}
           type={type} />
+
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
 
         {invalid && <div className="invalid-feedback">{error}</div>}
         {isWarning && <small>{warning}</small>}
