@@ -8,6 +8,7 @@ import FieldLevelValidation from './components/FieldLevelValidation/FieldLevelVa
 import MixedSyncValidation from './components/MixedSyncValidation/MixedSyncValidation';
 import AsyncBlurValidation from './components/AsyncBlurValidation/AsyncBlurValidation';
 import AsyncChangeValidation from './components/AsyncChangeValidation/AsyncChangeValidation';
+import InitializeFromState from './components/InitializeFromState/InitializeFromState';
 
 function App() {
   return (
@@ -16,11 +17,18 @@ function App() {
 
         {/* first */}
         <div className="col-sm">
-          <div className="alert alert-secondary mt-2" role="alert">
+          {/* <div className="alert alert-secondary mt-2" role="alert">
             A simple from without validation.
           </div>
           <Page>
             {submit => (<SimpleForm onSubmit={submit} />)}
+          </Page>
+          <hr /> */}
+          <div className="alert alert-secondary mt-2" role="alert">
+            Initialize from state.
+          </div>
+          <Page>
+            {submit => (<InitializeFromState onSubmit={submit} />)}
           </Page>
           <hr />
         </div>
@@ -35,7 +43,7 @@ function App() {
           </Page>
           <hr />
           <div className="alert alert-secondary mt-2" role="alert">
-            Mixed validation sync validation.(field level and validation fn)
+            Mixed sync validation.(field level and validation fn)
           </div>
           <Page>
             {submit => (<MixedSyncValidation onSubmit={submit} />)}
@@ -71,7 +79,7 @@ function App() {
           </Page>
           <hr />
           <div className="alert alert-secondary mt-2" role="alert">
-          Async change validation.(fails on multiple fields validation)
+            Async change validation.(fails on multiple fields validation)
           </div>
           <Page>
             {submit => (<AsyncChangeValidation onSubmit={submit} />)}
