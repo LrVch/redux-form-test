@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Page from './pages/Page/Page';
 import SyncValidationFormYup from './components/SyncValidationFormYup/SyncValidationFormYup';
@@ -9,8 +9,11 @@ import MixedSyncValidation from './components/MixedSyncValidation/MixedSyncValid
 import AsyncBlurValidation from './components/AsyncBlurValidation/AsyncBlurValidation';
 import AsyncChangeValidation from './components/AsyncChangeValidation/AsyncChangeValidation';
 import InitializeFromState from './components/InitializeFromState/InitializeFromState';
+import SelectingFormValues from './components/SelectingFormValues/SelectingFormValues';
 
 function App() {
+  const [nicknameRequired, setNicknameRequired] = useState({nicknameRequired: false})
+  const {nicknameRequired: nickRequired} = nicknameRequired
   return (
     <div className="container-fluid">
       <div className="row">
@@ -35,7 +38,7 @@ function App() {
 
         {/* second */}
         <div className="col-sm">
-          <div className="alert alert-secondary mt-2" role="alert">
+          {/* <div className="alert alert-secondary mt-2" role="alert">
             Simple sync validation.
           </div>
           <Page>
@@ -47,6 +50,21 @@ function App() {
           </div>
           <Page>
             {submit => (<MixedSyncValidation onSubmit={submit} />)}
+          </Page>
+          <hr /> */}
+          <div className="alert alert-secondary mt-2" role="alert">
+            Selecting form values, conditional validation with yup and context
+          </div>
+          <button
+            onClick={() => setNicknameRequired(obj => ({nicknameRequired: !obj.nicknameRequired}))}
+            type="submit"
+            className="btn btn-secondary">
+            Toggle nickname required "{nickRequired ? 'required' : 'not required'}"
+          </button>
+          <Page>
+            {submit => (<SelectingFormValues
+              context={nicknameRequired}
+              onSubmit={submit} />)}
           </Page>
           <hr />
         </div>

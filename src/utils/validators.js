@@ -1,8 +1,9 @@
 import { sleep } from './common'
 
-export const asyncValidator = schema => async formValues => {
+export const asyncValidator = schema => async (formValues, props) => {
+  const context = props.context || {}
   try {
-    await schema.validateSync(formValues, { abortEarly: false })
+    await schema.validate(formValues, { abortEarly: false, context })
 
     return Promise.resolve({})
   } catch (errors) {
@@ -16,9 +17,10 @@ export const asyncValidator = schema => async formValues => {
   }
 }
 
-export const syncValidator = schema => formValues => {
+export const syncValidator = schema => (formValues, props) => {
+  const context = props.context || {}
   try {
-    schema.validateSync(formValues, { abortEarly: false })
+    schema.validateSync(formValues, { abortEarly: false, context })
 
     return {}
   } catch (errors) {
