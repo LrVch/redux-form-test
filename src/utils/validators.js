@@ -166,3 +166,50 @@ export const asyncValidate = (values, dispatch, props, blurredField) => {
 }
 
 
+
+
+
+// const checkUserName = async ({username}, dispatch, props, field) => {
+//   console.log(props)
+//   await sleep(1000)
+//   if (['john', 'paul', 'george', 'ringo'].includes(username)) {
+//     // eslint-disable-next-line no-throw-literal
+//     return Promise.reject( {...props.asyncErrors, username: 'That username is taken' })
+//   }
+
+//   return Promise.resolve()
+// }
+
+// const checkUserEmail = async ({email}, dispatch, props, field) => {
+//   await sleep(1000)
+//   if (['john@mail.com', 'paul@mail.com', 'george@mail.com', 'ringo@mail.com']
+//     .includes(email)) {
+//     // eslint-disable-next-line no-throw-literal
+//     return Promise.reject(  {...props.asyncErrors, email: 'That email is already taken' })
+//   }
+
+//   return Promise.resolve()
+// }
+// const checkUserAge = async ({age}, dispatch, props, field) => {
+//   await sleep(1000)
+//   if (age < 16) {
+//     // eslint-disable-next-line no-throw-literal
+//     return Promise.reject(  {...props.asyncErrors, age: 'You are too young :(' })
+//   }
+
+//   return Promise.resolve()
+// }
+
+// const composeAsyncValidators = (validatorFns) => {
+//   return async (values, dispatch, props, field) => {
+//     const validatorFn = validatorFns[field]
+//     await validatorFn(values, dispatch, props, field);
+//   };
+// }
+
+// export const asyncValidate = composeAsyncValidators({  
+//   username: checkUserName,
+//   email: checkUserEmail,
+//   age: checkUserAge
+// })
+

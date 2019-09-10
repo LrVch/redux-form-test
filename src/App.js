@@ -7,6 +7,7 @@ import SyncValidationForm from './components/SyncValidationForm/SyncValidationFo
 import FieldLevelValidation from './components/FieldLevelValidation/FieldLevelValidation';
 import MixedSyncValidation from './components/MixedSyncValidation/MixedSyncValidation';
 import AsyncBlurValidation from './components/AsyncBlurValidation/AsyncBlurValidation';
+import AsyncChangeValidation from './components/AsyncChangeValidation/AsyncChangeValidation';
 
 function App() {
   return (
@@ -67,6 +68,13 @@ function App() {
           </div>
           <Page>
             {submit => (<FieldLevelValidation onSubmit={submit} />)}
+          </Page>
+          <hr />
+          <div className="alert alert-secondary mt-2" role="alert">
+          Async change validation.(fails on multiple fields validation)
+          </div>
+          <Page>
+            {submit => (<AsyncChangeValidation onSubmit={submit} />)}
           </Page>
           <hr />
         </div>
