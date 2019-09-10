@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import * as yup from 'yup';
 import { connect } from 'react-redux'
@@ -46,11 +46,13 @@ let SelectingFormValues = ({
   handleSubmit,
   hasEmailValue,
   favoriteColorValue,
-  context: {nicknameRequired},
+  context: { nicknameRequired },
   pristine,
   reset,
   submitting,
+  resetSection
 }) => {
+  const memorizedDestroyEmail = useCallback(() => { resetSection('email') }, [resetSection])
   return (
     <>
       <form
@@ -96,6 +98,7 @@ let SelectingFormValues = ({
 
           {hasEmailValue && <div className="mt-3">
             <Field
+              onDestoy={memorizedDestroyEmail}
               name="email"
               type="email"
               component={RenderField}

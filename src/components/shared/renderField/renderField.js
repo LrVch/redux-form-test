@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
 export const RenderField = ({
   children,
@@ -6,7 +6,8 @@ export const RenderField = ({
   label,
   meta: { asyncValidating, touched, error, warning },
   noValidate,
-  type,
+  onDestoy,
+  type
 }) => {
   const isCheckRadio = /radio|checkbox/.test(type)
   const isSelect = type === 'select'
@@ -17,6 +18,13 @@ export const RenderField = ({
   const isWarning = !noValidate && touched && warning && !invalid
   const valid = !noValidate && touched && !invalid
   const id = Math.random(32).toString().slice(2)
+
+  useEffect(() => {
+    return () => {
+      onDestoy && onDestoy()
+    }
+  }, [onDestoy])
+
   return (
     <div className={
       (asyncValidating ? ' async-validating ' : '') +
