@@ -4,6 +4,9 @@ import * as yup from 'yup';
 import { connect } from 'react-redux'
 import { syncValidator } from '../../utils'
 import { RenderField } from '../shared'
+import { userClubInfo as mockUserClubInfo } from '../../utils'
+import { getUserClubInfo } from '../../store/selectors/user';
+import { userClubInfoSuccess } from '../../store/actions';
 
 const selector = formValueSelector('fieldArraysForm')
 
@@ -14,7 +17,7 @@ const validationSchema = yup
       .string()
       .required('Club name is required')
       // eslint-disable-next-line no-template-curly-in-string
-      .max(15, 'Must be ${max} characters or less')
+      .max(25, 'Must be ${max} characters or less')
       // eslint-disable-next-line no-template-curly-in-string
       .min(2, 'Must be ${min} characters or more'),
     members$: yup
@@ -193,43 +196,68 @@ let FieldArraysForm = ({
   maxHobbiesLength,
   pristine,
   reset,
-  submitting
+  submitting,
+  load,
+  initialValues
 }) => {
-  return <form
-    className="mt-3"
-    noValidate
-    onSubmit={handleSubmit}>
+  return (
+    <>
+      <div>
+        <button
+          className="btn btn-secondary"
+          type="button"
+          onClick={() => load(mockUserClubInfo)}>
+          Load Account
+        </button>
+      </div>
+      <form
+        className="mt-3"
+        noValidate
+        onSubmit={handleSubmit}>
 
-    <div className="mt-3">
-      <Field
-        name="clubName"
-        type="text"
-        component={RenderField}
-        label="Club Name"
-      />
-    </div>
+        <div className="mt-3">
+          <Field
+            name="clubName"
+            type="text"
+            component={RenderField}
+            label="Club Name"
+          />
+        </div>
 
-    <FieldArray
-      maxHobbiesLength={maxHobbiesLength}
-      name="members$"
-      component={renderMembers} />
+        <FieldArray
+          maxHobbiesLength={maxHobbiesLength}
+          name="members$"
+          component={renderMembers} />
 
-    <div className="mt-3">
-      <button
-        type="submit"
-        disabled={submitting}
-        className="btn btn-secondary">Submit</button>
+        <div className="mt-3">
+          <button
+            type="submit"
+            disabled={submitting}
+            className="btn btn-secondary">Submit</button>
 
-      <button
-        type="submit"
-        disabled={pristine || submitting} onClick={reset}
-        className="btn btn-light ml-3">Clear</button>
-    </div>
-  </form>
+          <button
+            type="submit"
+            disabled={pristine || submitting} onClick={reset}
+            className="btn btn-light ml-3">Clear</button>
+        </div>
+      </form>
+    </>
+  )
 }
 
-export default reduxForm({
+const mapStateToProps = state => ({
+  initialValues: getUserClubInfo(state),
+})
+
+FieldArraysForm = reduxForm({
   form: 'fieldArraysForm',
   warn,
   validate: syncValidator(validationSchema),
 })(FieldArraysForm)
+
+FieldArraysForm = connect(
+  mapStateToProps,
+  { load: userClubInfoSuccess }
+)(FieldArraysForm)
+
+export default FieldArraysForm

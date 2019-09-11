@@ -12,3 +12,8 @@ export const getUserColors = createSelector(
   userState => userState.colors
 )
 
+export const getUserClubInfo = createSelector(
+  userState,
+  userState => userState.clubInfo
+)
+

@@ -16,6 +16,14 @@ const userReducer = (state = initialState, { type, payload }) => {
       }
     }
 
+    case actionsTypes.USER_CLUB_INFO_SUCCESS: {
+      const { clubInfo } = payload
+      return {
+        ...state,
+        clubInfo
+      }
+    }
+
     default:
       return state
   }
