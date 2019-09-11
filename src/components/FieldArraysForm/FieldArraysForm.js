@@ -1,8 +1,11 @@
 import React from 'react'
-import { Field, reduxForm, FieldArray } from 'redux-form'
+import { Field, reduxForm, FieldArray, formValueSelector } from 'redux-form'
 import * as yup from 'yup';
+import { connect } from 'react-redux'
 import { syncValidator } from '../../utils'
 import { RenderField } from '../shared'
+
+const selector = formValueSelector('fieldArraysForm')
 
 const validationSchema = yup
   .object()
@@ -64,7 +67,7 @@ const warn = (values) => {
 
     })
     if (membersArrayWarnings.length) {
-      warnings.members$ = [...warnings.members$,...membersArrayWarnings]
+      warnings.members$ = [...warnings.members$, ...membersArrayWarnings]
     }
   }
 
@@ -72,9 +75,6 @@ const warn = (values) => {
     warnings.members$._warning = 'Max 3 mebmers allowed'
   }
 
-
-  // console.log("warnings", warnings)
-  // console.log('='.repeat(20))
   return warnings
 }
 
@@ -114,7 +114,54 @@ const renderHobbies = ({ fields, maxHobbiesLength, meta: { error, warning } }) =
   </ul>)
 }
 
-const renderMembers = ({ fields, maxHobbiesLength, meta: { error, warning, submitFailed } }) => {
+let Member = ({ member, index, fields, firstName, lastName, maxHobbiesLength }) =>
+  <li className="list-group-item" key={index}>
+    <button
+      className="close"
+      type="button"
+      title="Remove Member"
+      onClick={() => fields.remove(index)}
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <h4>Member #{index + 1}
+      {firstName && <br />}
+      <span style={{
+        color: 'grey',
+        fontSize: '12px'
+      }}>{firstName} {lastName}</span>
+    </h4>
+    <Field
+      name={`${member}.firstName`}
+      type="text"
+      component={RenderField}
+      label="First Name"
+    />
+    <Field
+      name={`${member}.lastName`}
+      type="text"
+      component={RenderField}
+      label="Last Name"
+    />
+    <FieldArray
+      maxHobbiesLength={maxHobbiesLength}
+      name={`${member}.hobbies$`}
+      component={renderHobbies} />
+  </li>
+
+Member = connect(
+  (state, props) => ({
+    firstName: selector(state, `${props.member}.firstName`),
+    lastName: selector(state, `${props.member}.lastName`)
+  })
+)(Member)
+
+const renderMembers = ({
+  fields,
+  maxHobbiesLength,
+  meta: { error, warning, submitFailed }
+}) => {
   return (<ul className="list-group">
     <li className="list-group-item">
       <button
@@ -130,46 +177,23 @@ const renderMembers = ({ fields, maxHobbiesLength, meta: { error, warning, submi
       {warning && <div className="warning-message">{warning}</div>}
     </li>
 
-    {fields.map((member, index) => {
-      return (
-        <li className="list-group-item" key={index}>
-          <button
-            className="close"
-            type="button"
-            title="Remove Member"
-            onClick={() => fields.remove(index)}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-
-          <h4>Member #{index + 1}</h4>
-          <Field
-            name={`${member}.firstName`}
-            type="text"
-            component={RenderField}
-            label="First Name"
-          />
-          <Field
-            name={`${member}.lastName`}
-            type="text"
-            component={RenderField}
-            label="Last Name"
-          />
-          <FieldArray
-            maxHobbiesLength={maxHobbiesLength}
-            name={`${member}.hobbies$`}
-            component={renderHobbies} />
-        </li>)
-    })}
+    {fields.map((member, index) =>
+      <Member
+        maxHobbiesLength={maxHobbiesLength}
+        member={member}
+        fields={fields}
+        index={index}
+        key={index}
+      />)}
   </ul>)
 }
 
-const FieldArraysForm = ({
+let FieldArraysForm = ({
   handleSubmit,
+  maxHobbiesLength,
   pristine,
   reset,
-  submitting,
-  maxHobbiesLength
+  submitting
 }) => {
   return <form
     className="mt-3"
