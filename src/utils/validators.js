@@ -1,4 +1,5 @@
 import { sleep } from './common'
+import set from 'lodash/set'
 
 export const asyncValidator = schema => async (formValues, props) => {
   const context = props.context || {}
@@ -17,6 +18,23 @@ export const asyncValidator = schema => async (formValues, props) => {
   }
 }
 
+// export const syncValidator = schema => (formValues, props) => {
+//   const context = props.context || {}
+//   try {
+//     schema.validateSync(formValues, { abortEarly: false, context })
+
+//     return {}
+//   } catch (errors) {
+//     const resultErrors = errors.inner.reduce(
+//       (errors, err) => ({
+//         ...errors,
+//         [err.path]: err.message
+//       }), {})
+
+//     return resultErrors
+//   }
+// }
+
 export const syncValidator = schema => (formValues, props) => {
   const context = props.context || {}
   try {
@@ -24,11 +42,32 @@ export const syncValidator = schema => (formValues, props) => {
 
     return {}
   } catch (errors) {
-    const resultErrors = errors.inner.reduce(
-      (errors, err) => ({
-        ...errors,
-        [err.path]: err.message
-      }), {})
+    // console.log('errors', errors)
+    let resultErrors = {}
+
+    errors.inner.forEach((error) => {
+      // console.log('error.path', error.path)
+      // Checks whether it's an array or not.
+      // If a $ sign is in a path, it's an array
+      if (/\$/.test(error.path)) {
+
+        // Checks if it's a top level of an array
+        // If a path ends with a $ sign, it's a top level of an array
+        if (/\$$/.test(error.path)) {
+          set(resultErrors, error.path + '[_error]', error.message);
+          // If the path includes the $ sign and number wrapped with square brackets,
+          // it's a multilevel path
+        } else if (/\$\[\d+\]/.test(error.path)) { 
+          set(resultErrors, error.path, error.message);
+        }
+
+      } else {
+        set(resultErrors, error.path, error.message);
+        // resultErrors[error.path] = error.message
+      }
+    })
+
+    // console.log('resultErrors', resultErrors)
 
     return resultErrors
   }
@@ -130,7 +169,7 @@ export const russianPhoneNumberPattern = (
 const checkUserName = (username, props) => {
   if (['john', 'paul', 'george', 'ringo'].includes(username)) {
     // eslint-disable-next-line no-throw-literal
-    throw {...props.asyncErrors, username: 'That username is taken' }
+    throw { ...props.asyncErrors, username: 'That username is taken' }
   }
 }
 
@@ -138,14 +177,14 @@ const checkUserEmail = (email, props) => {
   if (['john@mail.com', 'paul@mail.com', 'george@mail.com', 'ringo@mail.com']
     .includes(email)) {
     // eslint-disable-next-line no-throw-literal
-    throw {...props.asyncErrors, email: 'That email is already taken' }
+    throw { ...props.asyncErrors, email: 'That email is already taken' }
   }
 }
 
 const checkUserAge = (age, props) => {
   if (age < 16) {
     // eslint-disable-next-line no-throw-literal
-    throw {...props.asyncErrors, age: 'You are too young :(' }
+    throw { ...props.asyncErrors, age: 'You are too young :(' }
   }
 }
 
