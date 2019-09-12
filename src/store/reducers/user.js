@@ -2,20 +2,7 @@ import * as actionsTypes from '../actions';
 
 const initialState = {
   colors: ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'],
-  account: {},
-  clubInfo: {
-    clubName: 'Some club in the hood',
-    members$: [
-      {
-        firstName: 'Jane',
-        lastName: 'Doe',
-      },
-      {
-        firstName: 'Sam',
-        lastName: ' Peterson',
-      }
-    ]
-  }
+  account: {}
 }
 
 const userReducer = (state = initialState, { type, payload }) => {

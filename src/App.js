@@ -21,25 +21,25 @@ function App() {
 
         {/* first */}
         <div className="col-sm">
-          {/* <div className="alert alert-secondary mt-2" role="alert">
+          <div className="alert alert-secondary mt-2" role="alert">
             A simple from without validation.
           </div>
           <Page>
             {submit => (<SimpleForm onSubmit={submit} />)}
           </Page>
-          <hr /> */}
-          {/* <div className="alert alert-secondary mt-2" role="alert">
+          <hr />
+          <div className="alert alert-secondary mt-2" role="alert">
             Initialize from state.
           </div>
           <Page>
             {submit => (<InitializeFromState onSubmit={submit} />)}
           </Page>
-          <hr /> */}
+          <hr />
         </div>
 
         {/* second */}
         <div className="col-sm">
-          {/* <div className="alert alert-secondary mt-2" role="alert">
+          <div className="alert alert-secondary mt-2" role="alert">
             Simple sync validation.
           </div>
           <Page>
@@ -52,8 +52,8 @@ function App() {
           <Page>
             {submit => (<MixedSyncValidation onSubmit={submit} />)}
           </Page>
-          <hr /> */}
-          {/* <div className="alert alert-secondary mt-2" role="alert">
+          <hr />
+          <div className="alert alert-secondary mt-2" role="alert">
             Selecting form values, conditional validation with yup and context
           </div>
           <button
@@ -67,12 +67,12 @@ function App() {
               context={nicknameRequired}
               onSubmit={submit} />)}
           </Page>
-          <hr /> */}
+          <hr />
         </div>
 
         {/* third */}
         <div className="col-sm">
-          {/* <div className="alert alert-secondary mt-2" role="alert">
+          <div className="alert alert-secondary mt-2" role="alert">
             Simple sync validation with yup.
           </div>
           <Page>
@@ -85,9 +85,9 @@ function App() {
           <Page>
             {submit => (<AsyncBlurValidation onSubmit={submit} />)}
           </Page>
-          <hr /> */}
+          <hr />
           <div className="alert alert-secondary mt-2" role="alert">
-            Field arrays form
+            Field arrays form(moving and DnD)
           </div>
           <Page>
             {submit => (<FieldArraysForm maxHobbiesLength="5" onSubmit={submit} />)}
@@ -97,7 +97,7 @@ function App() {
 
         {/* fourth */}
         <div className="col-sm">
-          {/* <div className="alert alert-secondary mt-2" role="alert">
+          <div className="alert alert-secondary mt-2" role="alert">
             Field level validation.
           </div>
           <Page>
@@ -110,7 +110,7 @@ function App() {
           <Page>
             {submit => (<AsyncChangeValidation onSubmit={submit} />)}
           </Page>
-          <hr /> */}
+          <hr />
         </div>
       </div>
     </div>
