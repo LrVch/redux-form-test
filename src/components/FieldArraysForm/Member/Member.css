@@ -1,0 +1,20 @@
+.member {
+
+}
+
+.member__actions {
+  opacity: 0;
+  display: flex;
+  justify-content: flex-end;
+  transition: opacity .2s;
+}
+
+.member__action {
+  float: none;
+  border: none;
+  background: transparent;
+}
+
+.member:hover .member__actions {
+  opacity: 1;
+}

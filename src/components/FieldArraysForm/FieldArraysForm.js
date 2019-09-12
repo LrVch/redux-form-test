@@ -7,6 +7,9 @@ import { RenderField } from '../shared'
 import { userClubInfo as mockUserClubInfo } from '../../utils'
 import { getUserClubInfo } from '../../store/selectors/user';
 import { userClubInfoSuccess } from '../../store/actions';
+import M from '../FieldArraysForm/Member/Member'
+
+let Member = M 
 
 const selector = formValueSelector('fieldArraysForm')
 
@@ -81,86 +84,15 @@ const warn = (values) => {
   return warnings
 }
 
-const renderHobbies = ({ fields, maxHobbiesLength, meta: { error, warning } }) => {
-  return (<ul className="list-group">
-    <li className="list-group-item">
-      <button
-        disabled={fields.length >= maxHobbiesLength}
-        className="btn btn-secondary"
-        type="button"
-        onClick={() => fields.push()}
-      >
-        Add Hobby
-      </button>
-      {error && <div className="error-message">{error}</div>}
-      {warning && <div className="warning-message">{warning}</div>}
-    </li>
-
-    {fields.map((hobby, index) => (
-      <li className="list-group-item" key={index}>
-        <button
-          className="close"
-          type="button"
-          title="Remove Hobby"
-          onClick={() => fields.remove(index)}
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <Field
-          name={hobby}
-          type="text"
-          component={RenderField}
-          label={`Hobby #${index + 1}`}
-        />
-      </li>
-    ))}
-  </ul>)
-}
-
-let Member = ({ member, index, fields, firstName, lastName, maxHobbiesLength }) =>
-  <li className="list-group-item" key={index}>
-    <button
-      className="close"
-      type="button"
-      title="Remove Member"
-      onClick={() => fields.remove(index)}
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-
-    <h4>Member #{index + 1}
-      {firstName && <br />}
-      <span style={{
-        color: 'grey',
-        fontSize: '12px'
-      }}>{firstName} {lastName}</span>
-    </h4>
-    <Field
-      name={`${member}.firstName`}
-      type="text"
-      component={RenderField}
-      label="First Name"
-    />
-    <Field
-      name={`${member}.lastName`}
-      type="text"
-      component={RenderField}
-      label="Last Name"
-    />
-    <FieldArray
-      maxHobbiesLength={maxHobbiesLength}
-      name={`${member}.hobbies$`}
-      component={renderHobbies} />
-  </li>
-
 Member = connect(
   (state, props) => ({
     firstName: selector(state, `${props.member}.firstName`),
-    lastName: selector(state, `${props.member}.lastName`)
+    lastName: selector(state, `${props.member}.lastName`),
+    hobbies: selector(state, `${props.member}.hobbies$`)
   })
 )(Member)
 
-const renderMembers = ({
+const RenderMembers = ({
   fields,
   maxHobbiesLength,
   meta: { error, warning, submitFailed }
@@ -197,8 +129,7 @@ let FieldArraysForm = ({
   pristine,
   reset,
   submitting,
-  load,
-  initialValues
+  load
 }) => {
   return (
     <>
@@ -207,7 +138,7 @@ let FieldArraysForm = ({
           className="btn btn-secondary"
           type="button"
           onClick={() => load(mockUserClubInfo)}>
-          Load Account
+          Load club info
         </button>
       </div>
       <form
@@ -227,7 +158,7 @@ let FieldArraysForm = ({
         <FieldArray
           maxHobbiesLength={maxHobbiesLength}
           name="members$"
-          component={renderMembers} />
+          component={RenderMembers} />
 
         <div className="mt-3">
           <button
