@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 export const RenderField = ({
   children,
@@ -7,7 +7,8 @@ export const RenderField = ({
   meta: { asyncValidating, touched, error, warning },
   noValidate,
   onDestoy,
-  type
+  type,
+  blockInput
 }) => {
   const isCheckRadio = /radio|checkbox/.test(type)
   const isSelect = type === 'select'
@@ -32,13 +33,23 @@ export const RenderField = ({
       (isCheckRadio ? ' form-check ' : '')
     }>
       {!isCheckRadio && <label htmlFor={id}>{label}</label>}
-      <div>
+      <div style={{ position: 'relative' }}>
+        {blockInput && <div style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          zIndex: 9999,
+        }}></div>}
         {isInput && <input
           id={id}
           className={
             (!isRadio && invalid ? ' is-invalid ' : ' ') +
             (!isRadio && valid ? ' is-valid ' : ' ') +
-            (!isCheckRadio ? ' form-control ' : ' form-check-input ')}
+            (!isCheckRadio ? ' form-control ' : ' form-check-input ') + 
+            ' bg-transparent '
+          }
           {...input}
           placeholder={label}
           type={type} />}

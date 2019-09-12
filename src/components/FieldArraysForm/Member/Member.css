@@ -1,9 +1,14 @@
 .member {
+  transition: background .2s;
+}
 
+.member_highLight {
+  background-color: #f1f0f0;
 }
 
 .member__actions {
   opacity: 0;
+  visibility: hidden;
   display: flex;
   justify-content: flex-end;
   transition: opacity .2s;
@@ -15,6 +20,12 @@
   background: transparent;
 }
 
+.member__actions_visible {
+  opacity: 1;
+  visibility: visible;
+}
+
 .member:hover .member__actions {
   opacity: 1;
+  visibility: visible;
 }

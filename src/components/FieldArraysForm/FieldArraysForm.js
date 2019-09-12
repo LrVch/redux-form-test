@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { Field, reduxForm, FieldArray, formValueSelector } from 'redux-form'
 import * as yup from 'yup';
 import { connect } from 'react-redux'
@@ -9,7 +9,7 @@ import { getUserClubInfo } from '../../store/selectors/user';
 import { userClubInfoSuccess } from '../../store/actions';
 import M from '../FieldArraysForm/Member/Member'
 
-let Member = M 
+let Member = M
 
 const selector = formValueSelector('fieldArraysForm')
 
@@ -97,30 +97,50 @@ const RenderMembers = ({
   maxHobbiesLength,
   meta: { error, warning, submitFailed }
 }) => {
-  return (<ul className="list-group">
-    <li className="list-group-item">
-      <button
-        disabled={fields.length >= 3}
-        className="btn btn-secondary"
-        type="button"
-        onClick={() => fields.push({})}
-      >
-        Add Member
-      </button>
+  const allFields = fields.getAll()
+  const [isDragging, setIsDragging] = useState(false)
+  const [hoverIndex, setHoverIndex] = useState(0)
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      setHoverIndex(hoverIndex)
+      fields.swap(dragIndex, hoverIndex)
+    },
+    [allFields],
+  )
+  return (
+    <ul className="list-group">
+      <li className="list-group-item">
 
-      {submitFailed && error && <div className="error-message">{error}</div>}
-      {warning && <div className="warning-message">{warning}</div>}
-    </li>
+        <button
+          disabled={fields.length >= 3}
+          className="btn btn-secondary"
+          type="button"
+          onClick={() => fields.push({})}
+        >
+          Add Member
+        </button>
 
-    {fields.map((member, index) =>
-      <Member
-        maxHobbiesLength={maxHobbiesLength}
-        member={member}
-        fields={fields}
-        index={index}
-        key={index}
-      />)}
-  </ul>)
+        {submitFailed && error && <div className="error-message">{error}</div>}
+        {warning && <div className="warning-message">{warning}</div>}
+      </li>
+
+      <div>
+        {fields.map((member, index) =>
+          <Member
+            highLight={isDragging && index === hoverIndex}
+            blockInput={isDragging}
+            beginDrag={() => setIsDragging(true)}
+            endDrag={() => setIsDragging(false)}
+            moveCard={moveCard}
+            maxHobbiesLength={maxHobbiesLength}
+            member={member}
+            fields={fields}
+            index={index}
+            key={index}
+          />)}
+      </div>
+    </ul>
+  )
 }
 
 let FieldArraysForm = ({
