@@ -1,0 +1,17 @@
+.show-case-btn {
+  border: 1px solid #000;
+  border-radius: 2px;
+  background-color: transparent;
+  transition: opacity .2s;
+}
+
+.show-case-btn_prism-okaidia {
+  border-color: #272822;
+  color: #272822;
+}
+
+.show-case-btn_prism {
+  color: #f5f2f0;
+  border-color: #272822;
+  background-color: #272822;
+}
