@@ -15,6 +15,10 @@ import ShowCase from './components/ShowCase/ShowCase'
 import Wrapper from './components/Wrapper/Wrapper'
 import CodeListening from './components/CodeListening/CodeListening'
 import { logger } from './utils'
+import { listing as MemberListing } from './components/FieldArraysForm/Member/Member'
+import { listing as RenderHobbiesListing } from './components/FieldArraysForm/RenderHobbies/RenderHobbies'
+
+console.log(MemberListing);
 
 
 function App() {
@@ -91,8 +95,8 @@ function App() {
             </Page>
             <hr />
             <ShowCase
-              codeListining={<CodeListening codeListening={MixedSyncValidationListing} />}
-              component={<MixedSyncValidation onSubmit={logger} />}
+              codeListining={<CodeListening codeListening={SelectingFormValuesListing} />}
+              component={<SelectingFormValues onSubmit={logger} />}
               title="Selecting form values, conditional validation with yup and context"
             />
           </Wrapper>
@@ -130,7 +134,11 @@ function App() {
             </Page>
             <hr />
             <ShowCase
-              codeListining={<CodeListening codeListening={FieldArraysFormListing} />}
+              codeListining={<CodeListening codeListening={[
+                { title: 'Main', code: FieldArraysFormListing },
+                { title: 'Member', code: MemberListing },
+                { title: 'Hobbies', code: RenderHobbiesListing }
+              ]} />}
               component={<FieldArraysForm onSubmit={logger} />}
               title="Field arrays form(moving and DnD)"
             />

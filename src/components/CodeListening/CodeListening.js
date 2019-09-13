@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import PrismCode from 'react-prism'
 import './CodeListening.css'
 import Spiner from '../shared/Spiner/Spiner'
+import { Tabs, Tab } from 'react-bootstrap';
 
 import { getTheme, getPrismShowLoader } from '../../store/selectors'
 
@@ -12,19 +13,33 @@ export const availableThemes = ['prism', 'prism-okaidia']
 const CodeListening = ({
   codeListening,
   lang = 'language-javascript',
-  showLoader }) => {
+  showLoader
+}) => {
   return (
     <>
-    <Spiner/>
       <div className={(showLoader ? 'code-listening__loader_show' : '') +
         " code-listening__loader"}
       >
-        <Spiner/>
+        <Spiner />
       </div>
       <div className="code-listening">
-        <PrismCode component="pre" className={lang}>
-          {codeListening}
-        </PrismCode>
+        {!codeListening.map && <div className="code-listening__full">
+          <PrismCode component="pre" className={lang}>
+            {codeListening}
+          </PrismCode>
+        </div>}
+
+        {codeListening.map && <div className="code-listening__full">
+          <div className="code-listening__tabs">
+            <Tabs transition={false} defaultActiveKey={codeListening[0].title} id="uncontrolled-tab-example">
+              {codeListening.map((tab, i) => <Tab key={i} eventKey={tab.title} title={tab.title}>
+                <PrismCode component="pre" className={lang}>
+                  {tab.code}
+                </PrismCode>
+              </Tab>)}
+            </Tabs>
+          </div>
+        </div>}
       </div>
     </>
   )
