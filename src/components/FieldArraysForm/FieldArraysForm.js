@@ -8,6 +8,7 @@ import { userClubInfo as mockUserClubInfo } from '../../utils'
 import { getUserClubInfo } from '../../store/selectors/user';
 import { userClubInfoSuccess } from '../../store/actions';
 import M from '../FieldArraysForm/Member/Member'
+import { ArrayFromContextConsumer } from '../../context/context';
 
 let Member = M
 
@@ -111,15 +112,17 @@ const RenderMembers = ({
   return (
     <ul className="list-group">
       <li className="list-group-item">
-
-        <button
-          disabled={fields.length >= 3}
-          className="btn btn-secondary"
-          type="button"
-          onClick={() => fields.push({})}
-        >
-          Add Member
-        </button>
+        <ArrayFromContextConsumer>{context => (
+          <button
+            disabled={fields.length >= context.members}
+            className="btn btn-secondary"
+            type="button"
+            onClick={() => fields.push({})}
+          >
+            Add Member
+          </button>
+        )}
+        </ArrayFromContextConsumer>
 
         {submitFailed && error && <div className="error-message">{error}</div>}
         {warning && <div className="warning-message">{warning}</div>}

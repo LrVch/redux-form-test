@@ -22,7 +22,7 @@ export default class PrismService {
         setTimeout(() => {
           res(theme)
         })
-        console.log('theme loaded ', theme)
+        // console.log('theme loaded ', theme)
       }
 
       this.styleRef.onerror = () => rej()

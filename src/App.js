@@ -17,6 +17,7 @@ import { logger } from './utils'
 import { listing as MemberListing } from './components/FieldArraysForm/Member/Member'
 import { listing as RenderHobbiesListing } from './components/FieldArraysForm/RenderHobbies/RenderHobbies'
 import RequiredButton from './components/shared/RequiredButton/RequiredButton'
+import { ArrayFromContextProvider, ArrayFromContextConsumer } from './context/context'
 
 function App() {
   return (
@@ -90,15 +91,20 @@ function App() {
           </Wrapper>
 
           <Wrapper title="Field arrays form(moving and DnD)">
-            <ShowCase
-              codeListining={<CodeListening codeListening={[
-                { title: 'Main', code: FieldArraysFormListing },
-                { title: 'Member', code: MemberListing },
-                { title: 'Hobbies', code: RenderHobbiesListing }
-              ]} />}
-              component={<FieldArraysForm onSubmit={logger} />}
-              title="Field arrays form(moving and DnD)"
-            />
+            <ArrayFromContextProvider value={{
+              maxHobbiesLength: 5,
+              members: 3
+            }}>
+              <ShowCase
+                codeListining={<CodeListening codeListening={[
+                  { title: 'Main', code: FieldArraysFormListing },
+                  { title: 'Member', code: MemberListing },
+                  { title: 'Hobbies', code: RenderHobbiesListing }
+                ]} />}
+                component={<FieldArraysForm onSubmit={logger} />}
+                title="Field arrays form(moving and DnD)"
+              />
+            </ArrayFromContextProvider>
           </Wrapper>
         </div>
 
