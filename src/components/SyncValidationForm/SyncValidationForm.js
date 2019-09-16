@@ -66,7 +66,9 @@ const SyncValidationForm = ({handleSubmit, pristine, reset, submitting}) => {
 export default reduxForm({
   form: 'syncValidation',
   validate,
-  warn
+  warn,
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(SyncValidationForm)
 
 export const listing = `
@@ -138,6 +140,8 @@ const SyncValidationForm = ({handleSubmit, pristine, reset, submitting}) => {
 export default reduxForm({
   form: 'syncValidation',
   validate,
-  warn
+  warn,
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(SyncValidationForm)
 `

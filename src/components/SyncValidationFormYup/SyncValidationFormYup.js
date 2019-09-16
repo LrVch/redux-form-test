@@ -77,7 +77,9 @@ const SyncValidationFormYup = ({ handleSubmit, pristine, reset, submitting }) =>
 export default reduxForm({
   form: 'syncValidationYup',
   validate: syncValidator(validationSchema),
-  warn: syncValidator(warningSchema)
+  warn: syncValidator(warningSchema),
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
   // asyncValidate: asyncValidator(schema)
 })(SyncValidationFormYup)
 

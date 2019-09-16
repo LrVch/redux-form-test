@@ -4,13 +4,14 @@ import * as yup from 'yup';
 import { connect } from 'react-redux'
 import { RenderField } from '../shared'
 import { syncValidator } from '../../utils'
-import { getUserColors } from '../../store/selectors/user'
+import { getUserColors, getUserContext } from '../../store/selectors/user'
 
 const validationSchema = yup.object().shape({
   nickname: yup
     .string()
-    .when('$nicknameRequired', (nicknameRequired, schema) =>
-      (nicknameRequired ? schema.required('Required') : schema.required('Required'))),
+    .when('$requiredNickname', (requiredNickname, schema) => {
+      return (requiredNickname ? schema.required('Required') : schema)
+    }),
   firstName: yup
     .string()
     .required('Required')
@@ -46,13 +47,15 @@ let SelectingFormValues = ({
   handleSubmit,
   hasEmailValue,
   favoriteColorValue,
-  context: { nicknameRequired },
+  context,
   pristine,
   reset,
   submitting,
-  resetSection
+  resetSection,
 }) => {
   const memorizedDestroyEmail = useCallback(() => { resetSection('email') }, [resetSection])
+  const { requiredNickname } = context
+
   return (
     <>
       <form
@@ -62,7 +65,8 @@ let SelectingFormValues = ({
         <fieldset disabled={submitting}>
           <div className="mt-3">
             <Field
-              noValidate={!nicknameRequired}
+              update={requiredNickname}
+              noValidate={!requiredNickname}
               name="nickname"
               type="text"
               component={RenderField}
@@ -163,15 +167,17 @@ const selector = formValueSelector('selectingFormValues')
 const mapStateToProps = state => ({
   colors: getUserColors(state),
   hasEmailValue: selector(state, 'hasEmail'),
-  favoriteColorValue: selector(state, 'favoriteColor')
+  favoriteColorValue: selector(state, 'favoriteColor'),
+  context: getUserContext(state)
 })
 
 SelectingFormValues = reduxForm({
   form: 'selectingFormValues',
   validate: syncValidator(validationSchema),
-  touchOnChange: true
+  touchOnChange: true,
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(SelectingFormValues)
-
 
 SelectingFormValues = connect(
   mapStateToProps,
@@ -186,13 +192,14 @@ import * as yup from 'yup';
 import { connect } from 'react-redux'
 import { RenderField } from '../shared'
 import { syncValidator } from '../../utils'
-import { getUserColors } from '../../store/selectors/user'
+import { getUserColors, getUserContext } from '../../store/selectors/user'
 
 const validationSchema = yup.object().shape({
   nickname: yup
     .string()
-    .when('$nicknameRequired', (nicknameRequired, schema) =>
-      (nicknameRequired ? schema.required('Required') : schema.required('Required'))),
+    .when('$requiredNickname', (requiredNickname, schema) => {
+      return (requiredNickname ? schema.required('Required') : schema)
+    }),
   firstName: yup
     .string()
     .required('Required')
@@ -228,13 +235,15 @@ let SelectingFormValues = ({
   handleSubmit,
   hasEmailValue,
   favoriteColorValue,
-  context: { nicknameRequired },
+  context,
   pristine,
   reset,
   submitting,
-  resetSection
+  resetSection,
 }) => {
   const memorizedDestroyEmail = useCallback(() => { resetSection('email') }, [resetSection])
+  const { requiredNickname } = context
+
   return (
     <>
       <form
@@ -244,7 +253,8 @@ let SelectingFormValues = ({
         <fieldset disabled={submitting}>
           <div className="mt-3">
             <Field
-              noValidate={!nicknameRequired}
+              update={requiredNickname}
+              noValidate={!requiredNickname}
               name="nickname"
               type="text"
               component={RenderField}
@@ -345,20 +355,21 @@ const selector = formValueSelector('selectingFormValues')
 const mapStateToProps = state => ({
   colors: getUserColors(state),
   hasEmailValue: selector(state, 'hasEmail'),
-  favoriteColorValue: selector(state, 'favoriteColor')
+  favoriteColorValue: selector(state, 'favoriteColor'),
+  context: getUserContext(state)
 })
 
 SelectingFormValues = reduxForm({
   form: 'selectingFormValues',
   validate: syncValidator(validationSchema),
-  touchOnChange: true
+  touchOnChange: true,
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(SelectingFormValues)
-
 
 SelectingFormValues = connect(
   mapStateToProps,
 )(SelectingFormValues)
 
 export default SelectingFormValues
-
 `

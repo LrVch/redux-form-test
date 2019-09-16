@@ -13,7 +13,8 @@ const ShowCase = ({
   onChangeTheme,
   title,
   theme,
-  showLoader
+  showLoader,
+  children
 }) => {
   const [show, setShow] = useState(false);
 
@@ -55,6 +56,7 @@ const ShowCase = ({
             <div className="show-case__content">
               <div className="show-case__col">
                 <div className="show-case__body">
+                  {children}
                   {component}
                 </div>
               </div>
@@ -72,6 +74,9 @@ const ShowCase = ({
           </Modal.Footer>
         </Modal>
       </div>
+      {children}
+      {!show && component}
+      <hr />
       <div>
         <Button variant="secondary" onClick={handleShow}>Expand</Button>
       </div>

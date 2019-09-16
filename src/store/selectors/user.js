@@ -17,3 +17,8 @@ export const getUserClubInfo = createSelector(
   userState => userState.clubInfo
 )
 
+export const getUserContext = createSelector(
+  userState,
+  userState => userState.context
+)
+

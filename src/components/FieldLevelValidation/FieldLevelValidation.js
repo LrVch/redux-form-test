@@ -92,6 +92,8 @@ const FieldLevelValidation = ({ handleSubmit, pristine, reset, submitting }) => 
 
 export default reduxForm({
   form: 'fieldLevelValidation',
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(FieldLevelValidation)
 
 export const listing = `

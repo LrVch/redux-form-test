@@ -72,7 +72,9 @@ export default reduxForm({
   validate: syncValidator(validationSchema),
   asyncValidate: asyncValidate,
   asyncChangeFields: ['username', 'email', 'age'],
-  persistentSubmitErrors: true
+  persistentSubmitErrors: true,
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(AsyncChangeValidation)
 
 export const listing = `

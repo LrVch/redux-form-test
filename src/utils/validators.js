@@ -36,7 +36,9 @@ export const asyncValidator = schema => async (formValues, props) => {
 // }
 
 export const syncValidator = schema => (formValues, props) => {
+  // console.log('props', props)
   const context = props.context || {}
+  // console.log("context", context)
   try {
     schema.validateSync(formValues, { abortEarly: false, context })
 

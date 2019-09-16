@@ -205,6 +205,8 @@ FieldArraysForm = reduxForm({
   form: 'fieldArraysForm',
   warn,
   validate: syncValidator(validationSchema),
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(FieldArraysForm)
 
 FieldArraysForm = connect(

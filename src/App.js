@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './App.css'
 import Page from './pages/Page/Page'
 import SyncValidationFormYup, { listing as SyncValidationFormYupListing } from './components/SyncValidationFormYup/SyncValidationFormYup'
@@ -17,13 +17,9 @@ import CodeListening from './components/CodeListening/CodeListening'
 import { logger } from './utils'
 import { listing as MemberListing } from './components/FieldArraysForm/Member/Member'
 import { listing as RenderHobbiesListing } from './components/FieldArraysForm/RenderHobbies/RenderHobbies'
-
-console.log(MemberListing);
-
+import RequiredButton from './components/shared/RequiredButton/RequiredButton'
 
 function App() {
-  const [nicknameRequired, setNicknameRequired] = useState({ nicknameRequired: false })
-  const { nicknameRequired: nickRequired } = nicknameRequired
   return (
     <div className="container-fluid">
       <div className="row">
@@ -31,10 +27,6 @@ function App() {
         {/* first */}
         <div className="col-sm">
           <Wrapper title="Simple from without validation.">
-            <Page>
-              {submit => (<SimpleForm onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={SimpleFormListing} />}
               component={<SimpleForm onSubmit={logger} />}
@@ -43,10 +35,6 @@ function App() {
           </Wrapper>
 
           <Wrapper title="Initialize from state.">
-            <Page>
-              {submit => (<InitializeFromState onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={InitializeFromStateListing} />}
               component={<InitializeFromState onSubmit={logger} />}
@@ -58,10 +46,6 @@ function App() {
         {/* second */}
         <div className="col-sm">
           <Wrapper title="Simple sync validation.">
-            <Page>
-              {submit => (<SyncValidationForm onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={SyncValidationFormListing} />}
               component={<SyncValidationForm onSubmit={logger} />}
@@ -70,10 +54,6 @@ function App() {
           </Wrapper>
 
           <Wrapper title="Mixed sync validation.(field level and validation fn)">
-            <Page>
-              {submit => (<MixedSyncValidation onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={MixedSyncValidationListing} />}
               component={<MixedSyncValidation onSubmit={logger} />}
@@ -82,33 +62,19 @@ function App() {
           </Wrapper>
 
           <Wrapper title="Selecting form values, conditional validation with yup and context">
-            <button
-              onClick={() => setNicknameRequired(obj => ({ nicknameRequired: !obj.nicknameRequired }))}
-              type="submit"
-              className="btn btn-secondary">
-              Toggle nickname required "{nickRequired ? 'required' : 'not required'}"
-          </button>
-            <Page>
-              {submit => (<SelectingFormValues
-                context={nicknameRequired}
-                onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={SelectingFormValuesListing} />}
               component={<SelectingFormValues onSubmit={logger} />}
               title="Selecting form values, conditional validation with yup and context"
-            />
+            >
+              <RequiredButton />
+            </ShowCase>
           </Wrapper>
         </div>
 
         {/* third */}
         <div className="col-sm">
           <Wrapper title="Simple sync validation with yup.">
-            <Page>
-              {submit => (<SyncValidationFormYup onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={SyncValidationFormYupListing} />}
               component={<SyncValidationFormYup onSubmit={logger} />}
@@ -117,10 +83,6 @@ function App() {
           </Wrapper>
 
           <Wrapper title="Async blur validation.(fails on multiple fields validation)">
-            <Page>
-              {submit => (<AsyncBlurValidation onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={AsyncBlurValidationListing} />}
               component={<AsyncBlurValidation onSubmit={logger} />}
@@ -129,10 +91,6 @@ function App() {
           </Wrapper>
 
           <Wrapper title="Field arrays form(moving and DnD)">
-            <Page>
-              {submit => (<FieldArraysForm maxHobbiesLength="5" onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={[
                 { title: 'Main', code: FieldArraysFormListing },
@@ -148,10 +106,6 @@ function App() {
         {/* fourth */}
         <div className="col-sm">
           <Wrapper title="Field level validation.">
-            <Page>
-              {submit => (<FieldLevelValidation onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={FieldLevelValidationListing} />}
               component={<FieldLevelValidation onSubmit={logger} />}
@@ -159,10 +113,6 @@ function App() {
             />
           </Wrapper>
           <Wrapper title="Async change validation.(fails on multiple fields validation)">
-            <Page>
-              {submit => (<AsyncChangeValidation onSubmit={submit} />)}
-            </Page>
-            <hr />
             <ShowCase
               codeListining={<CodeListening codeListening={AsyncChangeValidationListing} />}
               component={<AsyncChangeValidation onSubmit={logger} />}

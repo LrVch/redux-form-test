@@ -174,7 +174,9 @@ const mapStateToProps = state => ({
 InitializeFromState = reduxForm({
   form: 'initializeFromState',
   validate: syncValidator(validationSchema),
-  enableReinitialize: true
+  enableReinitialize: true,
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(InitializeFromState)
 
 InitializeFromState = connect(
@@ -362,7 +364,9 @@ const mapStateToProps = state => ({
 InitializeFromState = reduxForm({
   form: 'initializeFromState',
   validate: syncValidator(validationSchema),
-  enableReinitialize: true
+  enableReinitialize: true,
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(InitializeFromState)
 
 InitializeFromState = connect(

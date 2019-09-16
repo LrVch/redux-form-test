@@ -112,7 +112,9 @@ const MixedSyncValidation = ({ handleSubmit, pristine, reset, submitting }) => {
 
 export default reduxForm({
   form: 'mixedSyncValidation',
-  validate: syncValidator(validationSchema)
+  validate: syncValidator(validationSchema),
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(MixedSyncValidation)
 
 export const listing = `
@@ -230,6 +232,8 @@ const MixedSyncValidation = ({ handleSubmit, pristine, reset, submitting }) => {
 
 export default reduxForm({
   form: 'mixedSyncValidation',
-  validate: syncValidator(validationSchema)
+  validate: syncValidator(validationSchema),
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
 })(MixedSyncValidation)
 `

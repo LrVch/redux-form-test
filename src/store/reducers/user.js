@@ -2,7 +2,10 @@ import * as actionsTypes from '../actions';
 
 const initialState = {
   colors: ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'],
-  account: {}
+  account: {},
+  context: {
+    requiredNickname: true
+  }
 }
 
 const userReducer = (state = initialState, { type, payload }) => {
@@ -23,6 +26,19 @@ const userReducer = (state = initialState, { type, payload }) => {
         clubInfo
       }
     }
+
+    case actionsTypes.USER_TOGGLE_REQUIRED_NICKNAME: {
+      return {
+        ...state,
+        context: {
+          ...state.context,
+          requiredNickname: payload
+        }
+        
+      }
+    }
+
+    
 
     default:
       return state

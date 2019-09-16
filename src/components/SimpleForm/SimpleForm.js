@@ -134,7 +134,11 @@ const SimpleForm = ({ handleSubmit, pristine, reset, submitting }) => {
   </form>
 }
 
-export default reduxForm({ form: 'simple' })(SimpleForm)
+export default reduxForm({
+  form: 'simple',
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
+})(SimpleForm)
 
 export const listing = `
 import React from 'react'
@@ -273,6 +277,10 @@ const SimpleForm = ({ handleSubmit, pristine, reset, submitting }) => {
   </form>
 }
 
-export default reduxForm({ form: 'simple' })(SimpleForm)
+export default reduxForm({
+  form: 'simple',
+  forceUnregisterOnUnmount: true,
+  destroyOnUnmount: false
+})(SimpleForm)
 
 `
