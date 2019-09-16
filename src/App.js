@@ -1,6 +1,5 @@
 import React from 'react'
 import './App.css'
-import Page from './pages/Page/Page'
 import SyncValidationFormYup, { listing as SyncValidationFormYupListing } from './components/SyncValidationFormYup/SyncValidationFormYup'
 import SimpleForm, { listing as SimpleFormListing } from './components/SimpleForm/SimpleForm'
 import SyncValidationForm, { listing as SyncValidationFormListing } from './components/SyncValidationForm/SyncValidationForm'

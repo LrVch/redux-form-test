@@ -24,9 +24,11 @@ const CodeListening = ({
       </div>
       <div className="code-listening">
         {!codeListening.map && <div className="code-listening__full">
-          <PrismCode component="pre" className={lang}>
-            {codeListening}
-          </PrismCode>
+          <div className="code-listening__full-inner">
+            <PrismCode component="pre" className={lang}>
+              {codeListening}
+            </PrismCode>
+          </div>
         </div>}
 
         {codeListening.map && <div className="code-listening__full">
