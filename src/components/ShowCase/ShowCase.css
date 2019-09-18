@@ -33,9 +33,21 @@
   border-radius: 0;
 }
 
-.show-case__content {
+.show-case__content, .show-case__container {
   display: flex;
   flex-grow: 1;
+}
+
+.show-case__content {
+
+}
+
+.show-case__container {
+  display: none;
+}
+
+.show-case__container_visible {
+  display: flex;
 }
 
 .show-case__col {
@@ -67,4 +79,10 @@
   display: flex;
   justify-content: flex-end;
   padding-top: 5px;
+}
+
+.show-case__footer-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }

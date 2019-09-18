@@ -1,0 +1,11 @@
+.shared-content {
+
+}
+
+.shared-content .nav.nav-tabs .nav-item.nav-link {
+  color: #272822;
+}
+
+.shared-content .nav.nav-tabs .nav-item.nav-link.active {
+  color: #5f5f5f;
+}

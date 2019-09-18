@@ -8,6 +8,15 @@
   height: 100%;
 }
 
+.code-listening .nav.nav-tabs .nav-item.nav-link {
+  color: #272822;
+}
+
+.code-listening .nav.nav-tabs .nav-item.nav-link.active {
+  color: #5f5f5f;
+}
+
+
 .code-listening__loader {
   opacity: 0;
   visibility: hidden;
